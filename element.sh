@@ -1,6 +1,5 @@
 #!/bin/bash
 PSQL="psql --username=freecodecamp --dbname=periodic_table --tuples-only --no-align -c"
-
 if [[ -z $1 ]]
 then
   echo Please provide an element as an argument.
@@ -10,7 +9,6 @@ else
   if [[ $INPUT =~ ^[0-9]+$ ]]
   then
     ELEMENT_INFO=$($PSQL "SELECT atomic_number, symbol, name, type, atomic_mass, melting_point_celsius, boiling_point_celsius FROM elements FULL JOIN properties USING(atomic_number) WHERE atomic_number = $INPUT")
-
     if [[ -z $ELEMENT_INFO ]]
     then
       echo I could not find that element in the database.
@@ -25,7 +23,6 @@ else
   if [[ $INPUT =~ ^[a-zA-Z]{1,2}$ ]]
   then
     ELEMENT_INFO=$($PSQL "SELECT atomic_number, symbol, name, type, atomic_mass, melting_point_celsius, boiling_point_celsius FROM elements FULL JOIN properties USING(atomic_number) WHERE symbol = '$INPUT'")
-
     if [[ -z $ELEMENT_INFO ]]
     then
       echo I could not find that element in the database.
@@ -40,7 +37,6 @@ else
   if [[ $INPUT =~ ^[a-zA-Z]{3,}$ ]]
   then
     ELEMENT_INFO=$($PSQL "SELECT atomic_number, symbol, name, type, atomic_mass, melting_point_celsius, boiling_point_celsius FROM elements FULL JOIN properties USING(atomic_number) WHERE name = '$INPUT'")
-
     if [[ -z $ELEMENT_INFO ]]
     then
       echo I could not find that element in the database.
