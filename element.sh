@@ -6,6 +6,7 @@ then
 else
   INPUT=$1
   # if input is atomic_number
+  # regex: checks if the input is an integer of any length
   if [[ $INPUT =~ ^[0-9]+$ ]]
   then
     ELEMENT_INFO=$($PSQL "SELECT atomic_number, symbol, name, type, atomic_mass, melting_point_celsius, boiling_point_celsius FROM elements FULL JOIN properties USING(atomic_number) WHERE atomic_number = $INPUT")
@@ -20,6 +21,7 @@ else
     fi
   fi
   # if input is symbol
+  # regex: checks if the input is a string of one or two characters
   if [[ $INPUT =~ ^[a-zA-Z]{1,2}$ ]]
   then
     ELEMENT_INFO=$($PSQL "SELECT atomic_number, symbol, name, type, atomic_mass, melting_point_celsius, boiling_point_celsius FROM elements FULL JOIN properties USING(atomic_number) WHERE symbol = '$INPUT'")
@@ -34,6 +36,7 @@ else
     fi
   fi
   # if input is name
+  # regex: checks if the input is a string of three or more characters
   if [[ $INPUT =~ ^[a-zA-Z]{3,}$ ]]
   then
     ELEMENT_INFO=$($PSQL "SELECT atomic_number, symbol, name, type, atomic_mass, melting_point_celsius, boiling_point_celsius FROM elements FULL JOIN properties USING(atomic_number) WHERE name = '$INPUT'")
