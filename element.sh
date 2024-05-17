@@ -9,7 +9,7 @@ else
   # regex: checks if the input is an integer of any length
   if [[ $INPUT =~ ^[0-9]+$ ]]
   then
-    ELEMENT_INFO=$($PSQL "SELECT atomic_number, symbol, name, type, atomic_mass, melting_point_celsius, boiling_point_celsius FROM elements FULL JOIN properties USING(atomic_number) WHERE atomic_number = $INPUT")
+    ELEMENT_INFO=$($PSQL "SELECT atomic_number, symbol, name, type, atomic_mass, melting_point_celsius, boiling_point_celsius FROM elements FULL JOIN properties USING(atomic_number) FULL JOIN types USING(type_id) WHERE atomic_number = $INPUT")
     if [[ -z $ELEMENT_INFO ]]
     then
       echo I could not find that element in the database.
@@ -24,7 +24,7 @@ else
   # regex: checks if the input is a string of one or two characters
   if [[ $INPUT =~ ^[a-zA-Z]{1,2}$ ]]
   then
-    ELEMENT_INFO=$($PSQL "SELECT atomic_number, symbol, name, type, atomic_mass, melting_point_celsius, boiling_point_celsius FROM elements FULL JOIN properties USING(atomic_number) WHERE symbol = '$INPUT'")
+    ELEMENT_INFO=$($PSQL "SELECT atomic_number, symbol, name, type, atomic_mass, melting_point_celsius, boiling_point_celsius FROM elements FULL JOIN properties USING(atomic_number) FULL JOIN types USING(type_id) WHERE symbol = '$INPUT'")
     if [[ -z $ELEMENT_INFO ]]
     then
       echo I could not find that element in the database.
@@ -39,7 +39,7 @@ else
   # regex: checks if the input is a string of three or more characters
   if [[ $INPUT =~ ^[a-zA-Z]{3,}$ ]]
   then
-    ELEMENT_INFO=$($PSQL "SELECT atomic_number, symbol, name, type, atomic_mass, melting_point_celsius, boiling_point_celsius FROM elements FULL JOIN properties USING(atomic_number) WHERE name = '$INPUT'")
+    ELEMENT_INFO=$($PSQL "SELECT atomic_number, symbol, name, type, atomic_mass, melting_point_celsius, boiling_point_celsius FROM elements FULL JOIN properties USING(atomic_number) FULL JOIN types USING(type_id) WHERE name = '$INPUT'")
     if [[ -z $ELEMENT_INFO ]]
     then
       echo I could not find that element in the database.
